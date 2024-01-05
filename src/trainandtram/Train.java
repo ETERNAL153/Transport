@@ -1,4 +1,9 @@
-package transport;
+package trainandtram;
+
+import java.util.Objects;
+
+import wheel.WheeledTransportation;
+
 public class Train extends WheeledTransportation {
     private int numOfVehicles;
     private String nameOfTheStartingStation;
@@ -21,6 +26,13 @@ public class Train extends WheeledTransportation {
         this.nameOfTheDestinationStation = nameOfTheDestinationStation;
         this.serialNumber = baseNumber++;
     }
+    public Train(Train other) {
+        super(other);
+        this.numOfVehicles = other.numOfVehicles;
+        this.nameOfTheStartingStation = other.nameOfTheStartingStation;
+        this.nameOfTheDestinationStation = other.nameOfTheDestinationStation;
+        this.serialNumber = baseNumber++;
+    }
     public int getNumOfVehicles(){
         return numOfVehicles;
     }
@@ -34,5 +46,35 @@ public class Train extends WheeledTransportation {
     public String getDestinationStation() {
         return nameOfTheDestinationStation;
     }
+    public static long getNextSerialNumber() {
+        return baseNumber + 1;
+    }
+    @Override
+    public String toString() {
+        return "Train [numOfVehicles=" + numOfVehicles +
+                ", nameOfTheStartingStation='" + nameOfTheStartingStation + '\'' +
+                ", nameOfTheDestinationStation='" + nameOfTheDestinationStation + '\'' +
+                ", serialNumber=" + serialNumber +
+                ']';
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Train train = (Train) obj;
+        return numOfVehicles == train.numOfVehicles &&
+                Objects.equals(nameOfTheStartingStation, train.nameOfTheStartingStation) &&
+                Objects.equals(nameOfTheDestinationStation, train.nameOfTheDestinationStation) &&
+                serialNumber == train.serialNumber;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(numOfVehicles, nameOfTheStartingStation, nameOfTheDestinationStation, serialNumber);
+    }
+    
 
 }
